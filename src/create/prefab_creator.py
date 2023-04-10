@@ -9,6 +9,8 @@ from src.ecs.components.c_surface import CSurface
 from src.ecs.components.c_transform import CTransform
 from src.ecs.components.c_velocity import CVelocity
 
+from src.ecs.components.c_input_command import CInputCommand
+
 def create_square(world:esper.World, size:pygame.Vector2,
                     pos:pygame.Vector2, vel:pygame.Vector2, col:pygame.Color) -> int:
     cuad_entity = world.create_entity()
@@ -55,3 +57,8 @@ def create_enemy_spawner(world:esper.World, level_data:dict):
     spawner_entity = world.create_entity()
     world.add_component(spawner_entity,
                         CEnemySpawner(level_data["enemy_spawn_events"]))
+
+def create_input_player(world:esper.World):
+    input_left = world.create_entity()
+    world.add_component(input_left,
+                        CInputCommand("PLAYER_LEFT", pygame.K_LEFT))
