@@ -9,6 +9,8 @@ from src.ecs.systems.s_screen_bounce import system_screen_bounce
 
 from src.create.prefab_creator import create_enemy_spawner, create_player_square
 
+from src.ecs.components.c_velocity import CVelocity
+
 
 class GameEngine:
     def __init__(self) -> None:
@@ -50,7 +52,8 @@ class GameEngine:
         self._clean()
 
     def _create(self):
-        create_player_square(self.ecs_world,self.player_cfg, self.level_01_cfg["player_spawn"])
+        self._player_entity = create_player_square(self.ecs_world,self.player_cfg, self.level_01_cfg["player_spawn"])
+        self._player_c_v = self.ecs_world.component_for_entity(self._player_entity, CVelocity)
         create_enemy_spawner(self.ecs_world, self.level_01_cfg)
         pass
 
