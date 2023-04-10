@@ -35,7 +35,7 @@ def create_enemy_square(world:esper.World, pos:pygame.Vector2, enemy_info:dict):
     velocity = pygame.Vector2(random.choice([-vel_range, vel_range]),
                               random.choice([-vel_range, vel_range]))
     enemy_entity = create_square(world, size, pos, velocity, color)
-    world.add_component(enemy_entity, CTagPlayer)
+    world.add_component(enemy_entity, CTagEnemy())
 
 def create_player_square(world:esper.World,  palyer_info:dict, player_lvl_info:dict) -> int:
     size = pygame.Vector2(palyer_info["size"]["x"], 
@@ -49,7 +49,7 @@ def create_player_square(world:esper.World,  palyer_info:dict, player_lvl_info:d
     vel = pygame.Vector2(0,0)   
 
     player_entity = create_square(world, size,pos,vel,color)
-    world.add_component(player_entity, CTagEnemy)
+    world.add_component(player_entity, CTagPlayer())
     return player_entity
 
 
@@ -60,5 +60,15 @@ def create_enemy_spawner(world:esper.World, level_data:dict):
 
 def create_input_player(world:esper.World):
     input_left = world.create_entity()
+    input_right = world.create_entity()
+    input_up = world.create_entity()
+    input_down = world.create_entity()
+
     world.add_component(input_left,
                         CInputCommand("PLAYER_LEFT", pygame.K_LEFT))
+    world.add_component(input_right,
+                        CInputCommand("PLAYER_RIGHT", pygame.K_RIGHT))
+    world.add_component(input_up,
+                        CInputCommand("PLAYER_UP", pygame.K_UP))
+    world.add_component(input_down,
+                        CInputCommand("PLAYER_DOWN", pygame.K_DOWN))
