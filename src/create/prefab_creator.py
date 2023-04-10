@@ -30,6 +30,20 @@ def create_enemy_square(world:esper.World, pos:pygame.Vector2, enemy_info:dict):
                               random.choice([-vel_range, vel_range]))
     create_square(world, size, pos, velocity, color)
 
+def create_player_square(world:esper.World,  palyer_info:dict, player_lvl_info:dict):
+    size = pygame.Vector2(palyer_info["size"]["x"], 
+                          palyer_info["size"]["y"])
+    color = pygame.Color(palyer_info["color"]["r"],
+                         palyer_info["color"]["g"],
+                         palyer_info["color"]["b"])  
+    pos =  pygame.Vector2(player_lvl_info["position"]["x"]-size.x/2, 
+                          player_lvl_info["position"]["y"]-size.y/2)
+
+    vel = pygame.Vector2(0,0)   
+
+    create_square(world, size,pos,vel,color)
+
+
 def create_enemy_spawner(world:esper.World, level_data:dict):
     spawner_entity = world.create_entity()
     world.add_component(spawner_entity,
