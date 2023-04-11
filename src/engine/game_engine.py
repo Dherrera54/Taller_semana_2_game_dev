@@ -1,3 +1,4 @@
+from src.ecs.systems.s_player_limits import system_player_limits
 from src.ecs.systems.s_collision_player_enemy import system_collision_player_enemy
 from src.ecs.systems.s_input_player import system_input_player
 from src.ecs.components.c_input_command import CInputCommand, CommandPhase
@@ -74,6 +75,7 @@ class GameEngine:
         system_enemy_spawner(self.ecs_world, self.enemies_cfg, self.delta_time)
         system_movement(self.ecs_world, self.delta_time)
         system_screen_bounce(self.ecs_world, self.screen)
+        system_player_limits(self.ecs_world, self.screen)
         system_collision_player_enemy(self.ecs_world, self._player_entity, self.level_01_cfg)
         self.ecs_world._clear_dead_entities()
 
