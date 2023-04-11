@@ -1,5 +1,6 @@
 from src.ecs.components.tags.c_tag_player import CTagPlayer
 from src.ecs.components.tags.c_tag_enemy import CTagEnemy
+from src.ecs.components.tags.c_tag_bullet import CTagBullet
 import random
 import pygame
 import esper
@@ -52,6 +53,27 @@ def create_player_square(world:esper.World,  palyer_info:dict, player_lvl_info:d
     world.add_component(player_entity, CTagPlayer())
     return player_entity
 
+def create_bullet_square(world:esper.World,  
+                            bullet_info:dict, 
+                            bullet_pos_x:float, 
+                            bullet_pos_y:float,
+                            vel_x:float, 
+                            vel_y:float) -> int:
+    size = pygame.Vector2(bullet_info["size"]["x"], 
+                          bullet_info["size"]["y"])
+    color = pygame.Color(bullet_info["color"]["r"],
+                         bullet_info["color"]["g"],
+                         bullet_info["color"]["b"])  
+    pos =  pygame.Vector2(bullet_pos_x, 
+                          bullet_pos_y)
+
+    vel = pygame.Vector2(vel_x, 
+                         vel_y)   
+
+    bullet_entity = create_square(world, size,pos,vel,color)
+    world.add_component(bullet_entity, CTagBullet())
+    return bullet_entity
+
 
 def create_enemy_spawner(world:esper.World, level_data:dict):
     spawner_entity = world.create_entity()
@@ -63,6 +85,7 @@ def create_input_player(world:esper.World):
     input_right = world.create_entity()
     input_up = world.create_entity()
     input_down = world.create_entity()
+    input_mouse_click = world.create_entity()
 
     world.add_component(input_left,
                         CInputCommand("PLAYER_LEFT", pygame.K_LEFT))
@@ -72,3 +95,5 @@ def create_input_player(world:esper.World):
                         CInputCommand("PLAYER_UP", pygame.K_UP))
     world.add_component(input_down,
                         CInputCommand("PLAYER_DOWN", pygame.K_DOWN))
+    world.add_component(input_mouse_click,
+                        CInputCommand("PLAYER_FIRE", pygame.BUTTON_LEFT))

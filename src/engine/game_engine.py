@@ -1,3 +1,4 @@
+from src.ecs.systems.s_player_fire import system_player_fire
 from src.ecs.systems.s_player_limits import system_player_limits
 from src.ecs.systems.s_collision_player_enemy import system_collision_player_enemy
 from src.ecs.systems.s_input_player import system_input_player
@@ -14,6 +15,7 @@ from src.ecs.systems.s_screen_bounce import system_screen_bounce
 from src.create.prefab_creator import create_enemy_spawner, create_player_square, create_input_player
 
 from src.ecs.components.c_velocity import CVelocity
+from src.ecs.components.c_transform import CTransform
 
 
 class GameEngine:
@@ -44,6 +46,8 @@ class GameEngine:
             self.level_01_cfg = json.load(level_01_file)
         with open("assets/cfg/player.json") as player_file:
             self.player_cfg = json.load(player_file)
+        with open("assets/cfg/bullet.json") as bullet_file:
+            self.bullet_cfg = json.load(bullet_file)
 
     def run(self) -> None:
         self._create()
@@ -58,6 +62,7 @@ class GameEngine:
     def _create(self):
         self._player_entity = create_player_square(self.ecs_world,self.player_cfg, self.level_01_cfg["player_spawn"])
         self._player_c_v = self.ecs_world.component_for_entity(self._player_entity, CVelocity)
+        self._player_c_t = self.ecs_world.component_for_entity(self._player_entity, CTransform)
         create_enemy_spawner(self.ecs_world, self.level_01_cfg)
         create_input_player(self.ecs_world)
 
@@ -89,6 +94,7 @@ class GameEngine:
         pygame.quit()
 
     def _do_action(self, c_input:CInputCommand):
+        print(c_input.name + str(c_input.phase))
         if c_input.name == "PLAYER_LEFT":
             if c_input.phase == CommandPhase.START:
                 self._player_c_v.vel.x -= self.player_cfg["input_velocity"]
@@ -109,6 +115,13 @@ class GameEngine:
                 self._player_c_v.vel.y += self.player_cfg["input_velocity"]
             elif c_input.phase == CommandPhase.END:
                 self._player_c_v.vel.y -= self.player_cfg["input_velocity"]
+        elif c_input.name == "PLAYER_FIRE":
+            if c_input.phase == CommandPhase.START:
+                system_player_fire(self.ecs_world, 
+                                    self._player_c_t.pos.x,
+                                    self._player_c_t.pos.y, 
+                                    self.bullet_cfg, 
+                                    self.player_cfg)
 
 
 
