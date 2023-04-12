@@ -1,3 +1,4 @@
+from src.ecs.systems.s_bullet_limits import system_bullet_limits
 from src.ecs.systems.s_collision_bullet_enemy import system_collision_bullet_enemy
 from src.ecs.systems.s_player_fire import system_player_fire
 from src.ecs.systems.s_player_limits import system_player_limits
@@ -84,6 +85,7 @@ class GameEngine:
         system_player_limits(self.ecs_world, self.screen)
         system_collision_player_enemy(self.ecs_world, self._player_entity, self.level_01_cfg)        
         system_collision_bullet_enemy(self.ecs_world)
+        system_bullet_limits(self.ecs_world, self.screen)
         self.ecs_world._clear_dead_entities()
 
     def _draw(self):
