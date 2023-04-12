@@ -64,11 +64,9 @@ def create_bullet_square(world:esper.World,
     color = pygame.Color(bullet_info["color"]["r"],
                          bullet_info["color"]["g"],
                          bullet_info["color"]["b"])  
-    pos =  pygame.Vector2(bullet_pos_x, 
-                          bullet_pos_y)
+    pos =  pygame.Vector2(bullet_pos_x, bullet_pos_y)
 
-    vel = pygame.Vector2(vel_x, 
-                         vel_y)   
+    vel = pygame.Vector2(vel_x,vel_y)   
 
     bullet_entity = create_square(world, size,pos,vel,color)
     world.add_component(bullet_entity, CTagBullet())
