@@ -124,7 +124,8 @@ class GameEngine:
                                     self._player_c_t.pos.x,
                                     self._player_c_t.pos.y, 
                                     self.bullet_cfg, 
-                                    self.player_cfg)
+                                    self.player_cfg,
+                                    self.level_01_cfg["player_spawn"]["max_bullets"])
 
 
 
