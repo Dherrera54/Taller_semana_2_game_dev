@@ -1,12 +1,12 @@
 {
     "size": {
         "x": 25,
-        "y": 50
+        "y": 25
     },
     "color": {
         "r": 200,
         "g": 200,
-        "b": 100
+        "b": 200
     },
-    "input_velocity": 175
+    "input_velocity": 100
 }

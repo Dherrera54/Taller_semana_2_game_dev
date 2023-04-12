@@ -30,13 +30,20 @@ def create_enemy_square(world:esper.World, pos:pygame.Vector2, enemy_info:dict):
     color = pygame.Color(enemy_info["color"]["r"],
                          enemy_info["color"]["g"],
                          enemy_info["color"]["b"])
-    vel_max = enemy_info["velocity_max"]
-    vel_min = enemy_info["velocity_min"]
-    vel_range = random.randrange(vel_min, vel_max)
-    velocity = pygame.Vector2(random.choice([-vel_range, vel_range]),
-                              random.choice([-vel_range, vel_range]))
+
+    vel_x=random_vel_generator(enemy_info['velocity_min'], 
+                               enemy_info['velocity_max']) 
+    vel_y=random_vel_generator(enemy_info['velocity_min'], 
+                               enemy_info['velocity_max']) 
+ 
+    
+    velocity = pygame.Vector2(vel_x,
+                              vel_y)
     enemy_entity = create_square(world, size, pos, velocity, color)
     world.add_component(enemy_entity, CTagEnemy())
+
+def random_vel_generator(min_value:int,max_value:int):
+    return random.randint(min_value, max_value) * random.choice([1, -1])
 
 def create_player_square(world:esper.World,  palyer_info:dict, player_lvl_info:dict) -> int:
     size = pygame.Vector2(palyer_info["size"]["x"], 
