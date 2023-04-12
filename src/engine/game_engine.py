@@ -1,3 +1,4 @@
+from src.ecs.systems.s_collision_bullet_enemy import system_collision_bullet_enemy
 from src.ecs.systems.s_player_fire import system_player_fire
 from src.ecs.systems.s_player_limits import system_player_limits
 from src.ecs.systems.s_collision_player_enemy import system_collision_player_enemy
@@ -81,7 +82,8 @@ class GameEngine:
         system_movement(self.ecs_world, self.delta_time)
         system_screen_bounce(self.ecs_world, self.screen)
         system_player_limits(self.ecs_world, self.screen)
-        system_collision_player_enemy(self.ecs_world, self._player_entity, self.level_01_cfg)
+        system_collision_player_enemy(self.ecs_world, self._player_entity, self.level_01_cfg)        
+        system_collision_bullet_enemy(self.ecs_world)
         self.ecs_world._clear_dead_entities()
 
     def _draw(self):
@@ -94,7 +96,6 @@ class GameEngine:
         pygame.quit()
 
     def _do_action(self, c_input:CInputCommand):
-        print(c_input.name + str(c_input.phase))
         if c_input.name == "PLAYER_LEFT":
             if c_input.phase == CommandPhase.START:
                 self._player_c_v.vel.x -= self.player_cfg["input_velocity"]

@@ -24,21 +24,18 @@ def system_player_fire(world:esper.World,
         angle = math.atan((mouse_pos[1]-bullet_pos_y)/(mouse_pos[0]-bullet_pos_x))
     
     if mouse_pos[1]<bullet_pos_y and mouse_pos[0]<bullet_pos_x:
-        print(1)
         vel_y=-bullet_info["velocity"]*math.sin(angle)
         vel_x=-bullet_info["velocity"]*math.cos(angle)
     elif mouse_pos[1]>bullet_pos_y and mouse_pos[0]<bullet_pos_x:
-        print(2)
         vel_y=-bullet_info["velocity"]*math.sin(angle)
         vel_x=-bullet_info["velocity"]*math.cos(angle)
     else:
-        print(4)
         vel_y=bullet_info["velocity"]*math.sin(angle)
         vel_x=bullet_info["velocity"]*math.cos(angle)
     
 
 
-    create_bullet_square(world,bullet_info, bullet_pos_x, bullet_pos_y,vel_x,vel_y)
+    return create_bullet_square(world,bullet_info, bullet_pos_x, bullet_pos_y,vel_x,vel_y)
 
 
 
